@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 
 let connectToDb = (url) => {
-    mongoose.connect(url, {useNewUrlParser: true, useCreateIndex: true})  
+    mongoose.set('useFindAndModify', false);
+    mongoose.connect(url, {useNewUrlParser: true, useCreateIndex: true})
 }
 
 module.exports = {

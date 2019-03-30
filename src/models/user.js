@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
@@ -26,19 +26,36 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 4,
         trim: true,
+    },
+    role: {
+        type: String,
+        required: true,
+    },
+    active: {
+        type: Boolean,
+        default: true
     }
-
 })
 
+userSchema.virtual('entries', {
+    ref: 'Entry',
+    localField: '_id',
+    foreignField: 'owner'
+})
 
-// generates json web token for a user with usr id in it
+userSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject()
+    delete userObject.password
+    return userObject
+}
+
 userSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, 'secret')
     return token
 }
 
-//finds user by email and password
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
@@ -55,8 +72,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-// mongo middleware run before saving a new user and
-// Hashs the plain text password
+// Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
     const user = this
 
@@ -65,7 +81,13 @@ userSchema.pre('save', async function (next) {
     }
 
     next()
-    // call to execute the save to db
+})
+
+// Delete user tasks when user is removed
+userSchema.pre('remove', async function (next) {
+    const user = this
+    await Task.deleteMany({ owner: user._id })
+    next()
 })
 
 const User = mongoose.model('User', userSchema)

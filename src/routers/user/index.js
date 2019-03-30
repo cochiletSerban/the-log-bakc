@@ -1,6 +1,12 @@
-const auth = require("./auth")
-const UserRouter = require("express").Router()
+const userRouter = require("express").Router()
+const userController = require('./userController')
+const userEntryController = require('./userEntryController')
+const authRouter = require('./auth')
 
-UserRouter.use("/auth", auth)
-//UserRouter.use("/data", require("./data"))
-module.exports = UserRouter
+userRouter.use('/auth', authRouter)
+userRouter.get('', userController.getAll)
+userRouter.patch('/:id', userController.toggleActive)
+userRouter.patch('/:id', userController.toggleActive)
+userRouter.get('/:id/tasks', userEntryController.getAll)
+
+module.exports = userRouter

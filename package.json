@@ -1,24 +1,24 @@
 {
-  "name": "src",
+  "name": "task-manager",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
-    "jsonwebtoken": "^8.5.0",
-    "mongoose": "^5.4.19",
-    "multer": "^1.4.1",
-    "swagger-ui-express": "^4.0.2",
-    "validator": "^10.11.0"
+    "jsonwebtoken": "^8.4.0",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.3.16",
+    "validator": "^10.9.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.9"
   }
 }
