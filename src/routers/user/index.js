@@ -7,6 +7,6 @@ userRouter.use('/auth', authRouter)
 userRouter.get('', userController.getAll)
 userRouter.patch('/:id', userController.toggleActive)
 userRouter.patch('/:id', userController.toggleActive)
-userRouter.get('/:id/tasks', userEntryController.getAll)
+userRouter.get('/:id/entries', userEntryController.getAll)
 
 module.exports = userRouter

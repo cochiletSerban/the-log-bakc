@@ -12,10 +12,11 @@ let register = async (req, res) => {
 
 let login =  async (req, res) => {
     try {
-        await User.findByCredentials(req.body.email, req.body.password)
-        res.send({ token })
+        const user = await User.findByCredentials(req.body.email, req.body.password)
+        const token = await user.generateAuthToken()
+        res.status(200).json(token)
     } catch (e) {
-        res.status(400).send()
+        res.status(405).send()
     }
 }
 

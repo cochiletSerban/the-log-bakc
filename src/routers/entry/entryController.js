@@ -7,8 +7,9 @@ let create =  async (req, res) => {
     })
 
     try {
-        await entry.save()
-        res.status(201).send(entry)
+        const savedEntry = await entry.save()
+  
+        res.status(201).send(await savedEntry.populate('owner').execPopulate())
     } catch (e) {
         res.status(400).send(e)
     }
@@ -16,7 +17,7 @@ let create =  async (req, res) => {
 
 let getAll = async (req, res) => {
     try {
-        res.send(await Entry.find(req.query))
+        res.send(await Entry.find(req.query).populate('owner').exec())
     } catch (e) {
         res.status(500).send()
     }
