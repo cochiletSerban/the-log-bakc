@@ -5,6 +5,6 @@ const auth = require('../../middleware/auth')
 entryRouter.post('', auth, entryControler.create)
 entryRouter.get('', auth, entryControler.getAll)
 entryRouter.get('/:id', auth, entryControler.getById)
-entryRouter.delete('/:id', auth, entryControler.deleteEntry)
+entryRouter.delete('', auth, entryControler.deleteEntry)
 
 module.exports = entryRouter

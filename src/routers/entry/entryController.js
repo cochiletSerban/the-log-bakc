@@ -88,7 +88,7 @@ let getById = async (req, res) => {
 
 let deleteEntry = async (req, res) => {
     try {
-        const entry = await Entry.findOneAndDelete({ _id: req.params.id })
+        const entry = await Entry.deleteMany({_id: {$in:req.query.ids}})
 
         if (!entry) {
             res.status(404).send()
