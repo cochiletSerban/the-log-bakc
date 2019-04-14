@@ -1,1 +1,1 @@
-![Drag Racing](SchemaIdp.png)
+![](idpSchema.png)
